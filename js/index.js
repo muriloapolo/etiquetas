@@ -18,15 +18,26 @@ class Etiqueta {
     actionButtons();
   }
   geraTotalEtiqueta() {
+    let page = document.querySelector(".page");
     let vol = Number(this.totalVolume);
+    let i;
+    for (i = 1; i <= vol; i++) {
+      page.innerHTML += `<div class="cardEtiquetasImp">
+      "Destino:" ${this.cidade}
+      "Estado:" ${this.estado}
+      "Volumes:" ${i} / ${vol}
+      "Nota Fiscal:" ${this.notaFiscal}
+     </div>`;
+    }
   }
-  imprimeEtiquetas(e) {
+  imprimeEtiquetas() {
     let corpo = document.querySelector(".container");
     let book = document.querySelector(".book");
     book.classList.remove("togglerDisplay");
     corpo.classList.add("togglerDisplay");
     //Timer para ativar a impressão após clique
     setTimeout(() => {
+      this.geraTotalEtiqueta();
       window.print();
     }, 500);
   }
