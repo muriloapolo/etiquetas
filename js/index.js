@@ -1,3 +1,4 @@
+const etiquetaArrayPerPage = [];
 class Etiqueta {
   constructor(cidade, estado, totalVolume, notaFiscal) {
     this.cidade = cidade;
@@ -18,33 +19,79 @@ class Etiqueta {
     actionButtons();
   }
   geraTotalEtiqueta() {
-    // let page = document.querySelector(".page");
-    // let vol = Number(this.totalVolume);
-    // let i = undefined;
-    // for (i = 1; i <= vol; i++) {
-    //   page.innerHTML += `<div class="cardEtiquetasImp">
-    //   "Destino:" ${this.cidade}
-    //   "Estado:" ${this.estado}
-    //   "Volumes:" ${i} / ${vol}
-    //   "Nota Fiscal:" ${this.notaFiscal}
-    //  </div>`;
-    // }
-    
+    let book = document.querySelector(".book");
+    let vol = Number(this.totalVolume);
+    let i = undefined;
 
+    for (i = 1; i <= vol; i++) {
+      etiquetaArrayPerPage.push({
+        destino: this.cidade,
+        estado: this.estado,
+        volumes: `${i} / ${vol}`,
+        notaFiscal: this.notaFiscal,
+      });
+    }
+    //StackOverFlow
+
+    const separar = (etiquetaArrayPerPage, maximo) => {
+      return etiquetaArrayPerPage.reduce((acumulador, item, indice) => {
+        const grupo = Math.floor(indice / maximo);
+        acumulador[grupo] = [...(acumulador[grupo] || []), item];
+        return acumulador;
+      }, []);
+    };
+
+    // Teste de execução
+    // console.log(JSON.stringify(separar(etiquetaArrayPerPage, 12)));
+    //  console.log(etiquetaArrayPerPage)
+    // console.log(separar(etiquetaArrayPerPage, 12))
+    let newArraySlice = separar(etiquetaArrayPerPage, 10);
+
+    newArraySlice.forEach((divisores, op) => {
+      let page = document.createElement("div");
+      page.classList.add("page");
+      book.appendChild(page);
+
+      divisores.forEach((it) => {
+        let pages = document.querySelectorAll(".page");
+        pages[op].innerHTML += `<div class="card cardEtiquetasImp">
+        <ul class="list-group ">
+        <li class="list-group-item">Destino: ${it.destino} </li>
+        <li class="list-group-item">Estado:${it.estado}</li>
+        <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
+        <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
+      </ul>
+      </div>`
+
+
+
+
+        // <div class="campoEtiqueta">Destino: ${it.destino} </div>
+        // <div class="campoEtiqueta">Estado:${it.estado} </div>
+        // <div class="campoEtiqueta">Nota Fiscal: ${it.notaFiscal} </div>
+        // <div class="campoEtiqueta">Nota Fiscal: ${it.notaFiscal}</div>
+       
+      });
+    });
+    console.log(newArraySlice);
   }
   imprimeEtiquetas() {
     let corpo = document.querySelector(".container");
     let book = document.querySelector(".book");
     book.classList.remove("togglerDisplay");
     corpo.classList.add("togglerDisplay");
+
     //Timer para ativar a impressão após clique
-    // setTimeout(() => {
-    //   this.geraTotalEtiqueta();
-    //   window.print();
-    // }, 1000);
-    console.log(etiqueta)
+    setTimeout(() => {
+      if (book.innerHTML != "") {
+        book.innerHTML = "";
+      }
+      this.geraTotalEtiqueta();
+      window.print();
+    }, 1000);
   }
 }
+//Array para gerar etiqueta
 
 let a = function () {
   let cidade = document.querySelector("#nomeCidade").value;
@@ -65,5 +112,8 @@ function actionButtons() {
     etiqueta.imprimeEtiquetas();
   });
 
-    //Lógica para imprimir
+  //Lógica para imprimir
 }
+// function criaPaginas(newArraySlice) {
+
+// }

@@ -1,60 +1,58 @@
 .page {
-    width: 210mm;
-    min-height: 297mm;
-    height: auto;
-    padding: 5mm;
-    margin: 10mm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-   
+  width: 210mm;
+  min-height: 297mm;
+  height: auto;
+  padding: 5mm;
+  margin: 10mm auto;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.cardEtiquetasImp{
-    width:90mm;
-    height: 40mm ;
-    border: 1px solid;
-    margin: 3mm auto 6mm auto;
-
+.cardEtiquetasImp {
+  width: 90mm;
+  height: 45mm;
+  border: 1px solid;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 .togglerDisplay {
-    display: none; 
+  display: none;
 }
 
 @page {
-    size: A4;
-    margin: 0;
+  size: A4;
+  margin: 0;
 }
 @media print {
-    html, body {
-        width: 210mm;
-        min-height: 297mm;
-        height: auto;        
-    }
-    .page {
-        margin: 0;
-        border: initial;
-        border-radius: initial;
-        width: initial;
-        min-height: initial;
-        box-shadow: initial;
-        background: initial;
-        page-break-after: always;
-    }
-    .cardEtiquetasImp{
-        width:90mm;
-        height: 40mm ;
-        border: 1px solid;
-        margin: 5mm auto 4mm auto;
-    
-    }
-
+  /* html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  } */
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    /* width: initial; */
+    /* min-height: initial; */
+    width: 210;
+    min-height: 297;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+  .cardEtiquetasImp {
+    width: 90mm;
+    height: 45mm;
+    border: 1px solid;
+    margin: 5mm auto 5mm auto;
+  }
 }
-
