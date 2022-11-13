@@ -18,17 +18,19 @@ class Etiqueta {
     actionButtons();
   }
   geraTotalEtiqueta() {
-    let page = document.querySelector(".page");
-    let vol = Number(this.totalVolume);
-    let i;
-    for (i = 1; i <= vol; i++) {
-      page.innerHTML += `<div class="cardEtiquetasImp">
-      "Destino:" ${this.cidade}
-      "Estado:" ${this.estado}
-      "Volumes:" ${i} / ${vol}
-      "Nota Fiscal:" ${this.notaFiscal}
-     </div>`;
-    }
+    // let page = document.querySelector(".page");
+    // let vol = Number(this.totalVolume);
+    // let i = undefined;
+    // for (i = 1; i <= vol; i++) {
+    //   page.innerHTML += `<div class="cardEtiquetasImp">
+    //   "Destino:" ${this.cidade}
+    //   "Estado:" ${this.estado}
+    //   "Volumes:" ${i} / ${vol}
+    //   "Nota Fiscal:" ${this.notaFiscal}
+    //  </div>`;
+    // }
+    
+
   }
   imprimeEtiquetas() {
     let corpo = document.querySelector(".container");
@@ -36,10 +38,11 @@ class Etiqueta {
     book.classList.remove("togglerDisplay");
     corpo.classList.add("togglerDisplay");
     //Timer para ativar a impressão após clique
-    setTimeout(() => {
-      this.geraTotalEtiqueta();
-      window.print();
-    }, 500);
+    // setTimeout(() => {
+    //   this.geraTotalEtiqueta();
+    //   window.print();
+    // }, 1000);
+    console.log(etiqueta)
   }
 }
 
@@ -58,9 +61,9 @@ let etiqueta;
 
 function actionButtons() {
   let geraEtiquetaBtn = document.querySelector("#btnConfirmaEtiqueta");
-  geraEtiquetaBtn.addEventListener("click", function (e) {
-    etiqueta.imprimeEtiquetas(e);
+  geraEtiquetaBtn.addEventListener("click", function () {
+    etiqueta.imprimeEtiquetas();
   });
 
-  //Lógica para imprimir
+    //Lógica para imprimir
 }

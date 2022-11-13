@@ -10,3 +10,4 @@ largura de 20
 4cm * 6 = 24 + space entre eles
 8cm * 2 = 16 + space
 13 / 12
+
