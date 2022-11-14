@@ -58,7 +58,7 @@ class Etiqueta {
         <ul class="list-group ">
         <li class="list-group-item">Destino: ${it.destino} </li>
         <li class="list-group-item">Estado:${it.estado}</li>
-        <li class="list-group-item">Volume: ${it.volume}</li>
+        <li class="list-group-item">Volume: ${it.volumes}</li>
         <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
       </ul>
       </div>`
