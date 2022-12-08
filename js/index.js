@@ -58,7 +58,7 @@ class Etiqueta {
         <ul class="list-group ">
         <li class="list-group-item">Destino: ${it.destino} </li>
         <li class="list-group-item">Estado:${it.estado}</li>
-        <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
+        <li class="list-group-item">Volume: ${it.volumes}</li>
         <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
       </ul>
       </div>`;
@@ -106,6 +106,8 @@ let a = function () {
   let estado = document.querySelector("#estado").value;
   let volumes = document.querySelector("#volumes").value;
   let notaFiscal = document.querySelector("#notaFiscal").value;
+
+  console.log(cidade, estado, volumes, notaFiscal);
 
   etiqueta = new Etiqueta(cidade, estado, volumes, notaFiscal);
   etiqueta.montaEtiqueta();
