@@ -21,7 +21,7 @@ class Etiqueta {
   geraTotalEtiqueta() {
     let book = document.querySelector(".book");
     let vol = Number(this.totalVolume);
-    let i = undefined;
+    let i;
 
     for (i = 1; i <= vol; i++) {
       etiquetaArrayPerPage.push({
@@ -61,20 +61,28 @@ class Etiqueta {
         <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
         <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
       </ul>
-      </div>`
-
-
-
-
-        // <div class="campoEtiqueta">Destino: ${it.destino} </div>
-        // <div class="campoEtiqueta">Estado:${it.estado} </div>
-        // <div class="campoEtiqueta">Nota Fiscal: ${it.notaFiscal} </div>
-        // <div class="campoEtiqueta">Nota Fiscal: ${it.notaFiscal}</div>
-       
+      </div>`;
       });
     });
-    console.log(newArraySlice);
   }
+  /* REMOVIDO PARA MANUTENÇÃO */
+  // imprimeEtiquetas() {
+  //   let corpo = document.querySelector(".container");
+  //   let book = document.querySelector(".book");
+  //   book.classList.remove("togglerDisplay");
+  //   corpo.classList.add("togglerDisplay");
+
+  //   //Timer para ativar a impressão após clique
+  //   setTimeout(() => {
+  //     if (book.innerHTML != "") {
+  //       book.innerHTML = "";
+  //     }
+  //     this.geraTotalEtiqueta();
+  //     window.print();
+  //   }, 1000);
+  // }
+  /* REMOVIDO PARA MANUTENÇÃO */
+
   imprimeEtiquetas() {
     let corpo = document.querySelector(".container");
     let book = document.querySelector(".book");
@@ -99,11 +107,10 @@ let a = function () {
   let volumes = document.querySelector("#volumes").value;
   let notaFiscal = document.querySelector("#notaFiscal").value;
 
-  console.log(cidade, estado, volumes, notaFiscal);
-
   etiqueta = new Etiqueta(cidade, estado, volumes, notaFiscal);
   etiqueta.montaEtiqueta();
 };
+
 let etiqueta;
 
 function actionButtons() {
@@ -111,9 +118,5 @@ function actionButtons() {
   geraEtiquetaBtn.addEventListener("click", function () {
     etiqueta.imprimeEtiquetas();
   });
-
-  //Lógica para imprimir
 }
-// function criaPaginas(newArraySlice) {
-
-// }
+//Lógica para imprimir
