@@ -54,35 +54,17 @@ class Etiqueta {
 
       divisores.forEach((it) => {
         let pages = document.querySelectorAll(".page");
-        pages[op].innerHTML += `<div class="card cardEtiquetasImp">
+        pages[op].innerHTML += `<div class="card cardEtiquetasImp">        
         <ul class="list-group ">
-        <li class="list-group-item">Destino: ${it.destino} </li>
-        <li class="list-group-item">Estado:${it.estado}</li>
-        <li class="list-group-item">Volume: ${it.volumes}</li>
-        <li class="list-group-item">Nota Fiscal: ${it.notaFiscal}</li>
+        <li class="list-group-item">Destino: <span class="text-item">${it.destino}</span> </li>
+        <li class="list-group-item">Estado:<span class="text-item">${it.estado}</span></li>
+        <li class="list-group-item">Volume: <span class="text-item">${it.volumes}</span></li>
+        <li class="list-group-item">Nota Fiscal: <span class="text-item">${it.notaFiscal}</span></li>
       </ul>
       </div>`;
       });
     });
   }
-  /* REMOVIDO PARA MANUTENÇÃO */
-  // imprimeEtiquetas() {
-  //   let corpo = document.querySelector(".container");
-  //   let book = document.querySelector(".book");
-  //   book.classList.remove("togglerDisplay");
-  //   corpo.classList.add("togglerDisplay");
-
-  //   //Timer para ativar a impressão após clique
-  //   setTimeout(() => {
-  //     if (book.innerHTML != "") {
-  //       book.innerHTML = "";
-  //     }
-  //     this.geraTotalEtiqueta();
-  //     window.print();
-  //   }, 1000);
-  // }
-  /* REMOVIDO PARA MANUTENÇÃO */
-
   imprimeEtiquetas() {
     let corpo = document.querySelector(".container");
     let book = document.querySelector(".book");
@@ -96,7 +78,7 @@ class Etiqueta {
       }
       this.geraTotalEtiqueta();
       window.print();
-    }, 1000);
+    }, 3000);
   }
 }
 //Array para gerar etiqueta

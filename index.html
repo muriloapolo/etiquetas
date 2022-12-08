@@ -9,77 +9,77 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./css/style.css"/>
     </head>
-    <div class="container mb-3">
-        <h1 class="text-center display-1 mb-4">Etiquetas</h1>
-        <form action="" class="form form-control" id="formEtiquetas">
-            <div class="mb-3">
-                <label for="nomeCidade" class="form-label nomeCidade">Cidade</label>
-                <input class="form-control" type="text" id="nomeCidade" placeholder="Cidade" aria-label="Insira o nome da cidade"/>
-            </div>
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <input class="form-control" type="text" placeholder="Estado" aria-label="Estado" id="estado"/>
-            </div>
-            <div class="mb-3">
-                <label for="volumes" class="form-label">Volumes</label>
-                <input class="form-control" type="text" placeholder="Quantidade de volumes" aria-label="volumes" id="volumes"/>
-            </div>
-            <div class="mb-3">
-                <label for="notaFiscal" class="form-label">Nota Fiscal</label>
-                <input class="form-control" type="text" placeholder="Nota Fiscal" aria-label="ponto de referencia" id="notaFiscal"/>
-            </div>
-            <button type="button" class="btn btn-info" id="geraEtiquetaBtn" data-bs-toggle="modal" data-bs-target="#confirmEtiquetas" onclick="a()">
-                Gerar Etiquetas
-            </button>
-        </form>
+    <body>
 
-
-        <!-- Fim container -->
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="confirmEtiquetas" tabindex="-1" aria-labelledby="confirmEtiquetasLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-4">
-                        Etiquetas -
-                        <span class="text-danger">
-                            Verificar dados preenchidos</span>
-                    </h1>
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="container mb-3">
+            <h1 class="text-center display-1 mb-4">Etiquetas</h1>
+            <form action="" class="form form-control" id="formEtiquetas">
+                <div class="mb-3">
+                    <label for="nomeCidade" class="form-label nomeCidade">Cidade</label>
+                    <input class="form-control" type="text" id="nomeCidade" placeholder="Cidade" aria-label="Insira o nome da cidade"/>
                 </div>
-                <div
-                    class="modal-body">
-                    <!-- CARD EXAMPLE -->
-                    <div class="card">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" id="city">Cidade</li>
-                            <li class="list-group-item" id="uf">Estado</li>
-                            <li class="list-group-item" id="nf">Nota Fiscal</li>
-                            <li class="list-group-item" id="vol">Volume</li>
-                        </ul>
+                <div class="mb-3">
+                    <label for="estado" class="form-label">Estado</label>
+                    <input class="form-control" type="text" placeholder="Estado" aria-label="Estado" id="estado"/>
+                </div>
+                <div class="mb-3">
+                    <label for="volumes" class="form-label">Volumes</label>
+                    <input class="form-control" type="text" placeholder="Quantidade de volumes" aria-label="volumes" id="volumes"/>
+                </div>
+                <div class="mb-3">
+                    <label for="notaFiscal" class="form-label">Nota Fiscal</label>
+                    <input class="form-control" type="text" placeholder="Nota Fiscal" aria-label="ponto de referencia" id="notaFiscal"/>
+                </div>
+                <button type="button" class="btn btn-info" id="geraEtiquetaBtn" data-bs-toggle="modal" data-bs-target="#confirmEtiquetas" onclick="a()">
+                    Gerar Etiquetas
+                </button>
+            </form>
+
+
+            <!-- Fim container -->
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="confirmEtiquetas" tabindex="-1" aria-labelledby="confirmEtiquetasLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4">
+                            Etiquetas -
+                            <span class="text-danger">
+                                Verificar dados preenchidos</span>
+                        </h1>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <!-- CARD EXAMPLE -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Corrigir
-                    </button>
-                    <button type="button" class="btn btn-primary" id="btnConfirmaEtiqueta" data-bs-dismiss="modal">
-                        Imprimir
-                    </button>
+                    <div
+                        class="modal-body">
+                        <!-- CARD EXAMPLE -->
+                        <div class="card">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" id="city">Cidade</li>
+                                <li class="list-group-item" id="uf">Estado</li>
+                                <li class="list-group-item" id="nf">Nota Fiscal</li>
+                                <li class="list-group-item" id="vol">Volume</li>
+                            </ul>
+                        </div>
+                        <!-- CARD EXAMPLE -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Corrigir
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnConfirmaEtiqueta" data-bs-dismiss="modal">
+                            Imprimir
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="book togglerDisplay">
-       
-    </div>
+        <div class="book togglerDisplay"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-    <script defer src="./js/index.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+        <script defer src="./js/index.js"></script>
+    </body>
 </html>

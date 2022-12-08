@@ -26,17 +26,21 @@
 .togglerDisplay {
   display: none;
 }
-
+.text-item{
+  text-transform: uppercase; 
+  margin-left: 10px;
+  font-weight: bold;
+}
 @page {
   size: A4;
   margin: 0;
 }
 @media print {
-  /* html,
+  html,
   body {
     width: 210mm;
     height: 297mm;
-  } */
+  }
   .page {
     margin: 0;
     border: initial;
