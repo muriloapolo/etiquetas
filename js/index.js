@@ -49,12 +49,21 @@ class Etiqueta {
 
     newArraySlice.forEach((divisores, op) => {
       let page = document.createElement("div");
+      let btnPrint = document.createElement("button");
+      btnPrint.classList.add("btn-print");
+      btnPrint.innerText = "IMPRIMIR";
+      btnPrint.addEventListener("click", () => {
+        btnPrint.classList.add("togglerDisplay");
+        window.print();
+      });
+      book.appendChild(btnPrint);
       page.classList.add("page");
       book.appendChild(page);
 
       divisores.forEach((it) => {
         let pages = document.querySelectorAll(".page");
-        pages[op].innerHTML += `<div class="card cardEtiquetasImp">        
+        pages[op].innerHTML += `<div class="card cardEtiquetasImp">
+                
         <ul class="list-group ">
         <li class="list-group-item">Destino: <span class="text-item">${it.destino}</span> </li>
         <li class="list-group-item">Estado:<span class="text-item">${it.estado}</span></li>
@@ -77,8 +86,7 @@ class Etiqueta {
         book.innerHTML = "";
       }
       this.geraTotalEtiqueta();
-      window.print();
-    }, 3000);
+    }, 2000);
   }
 }
 //Array para gerar etiqueta

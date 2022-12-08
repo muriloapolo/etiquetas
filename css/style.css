@@ -26,11 +26,34 @@
 .togglerDisplay {
   display: none;
 }
-.text-item{
-  text-transform: uppercase; 
+.text-item {
+  text-transform: uppercase;
   margin-left: 10px;
   font-weight: bold;
 }
+.book {
+  position: relative;
+}
+.btn-print {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  border-radius: 20px;
+  padding: 5px 20px;
+  border: none;
+  text-transform: uppercase;
+  background-color: rgb(6, 181, 6);
+  color: rgb(255, 255, 255);
+  opacity: 0.9;
+}
+
+.btn-print:hover {
+  opacity: 1;
+}
+
+/*IMPRESSORA*/
 @page {
   size: A4;
   margin: 0;
