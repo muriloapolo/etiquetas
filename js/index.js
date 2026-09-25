@@ -1,4 +1,85 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById('formEtiquetas');
+    const modalConfirm = new bootstrap.Modal(document.getElementById('confirmEtiquetas'));
+    const btnGeraEtiquetaBtn = document.getElementById('geraEtiquetaBtn');
+    const btnConfirmaEtiqueta = document.getElementById('btnConfirmaEtiqueta');
+    
+    const printArea = document.getElementById('printArea');
+    let dadosEtiqueta = {};
+
+    // Ação 1: Validar Formulário e Abrir Modal
+    btnGeraEtiquetaBtn.addEventListener('click', () => {
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Coletar dados
+        dadosEtiqueta = {
+            cliente: document.getElementById('nomeCliente').value,
+            chave: document.getElementById('chaveAcesso').value.replace(/\s+/g, ''),
+            cidade: document.getElementById('nomeCidade').value,
+            estado: document.getElementById('estado').value,
+            volumes: parseInt(document.getElementById('volumes').value),
+            nota: document.getElementById('notaFiscal').value
+        };
+
+        // Preencher Modal
+        document.getElementById('cliModal').innerText = dadosEtiqueta.cliente.toUpperCase();
+        document.getElementById('city').innerText = dadosEtiqueta.cidade.toUpperCase();
+        document.getElementById('uf').innerText = dadosEtiqueta.estado.toUpperCase();
+        document.getElementById('nf').innerText = dadosEtiqueta.nota;
+        document.getElementById('vol').innerText = dadosEtiqueta.volumes;
+
+        modalConfirm.show();
+    });
+
+    // Ação 2: Gerar Etiquetas com QR Code e Imprimir
+    btnConfirmaEtiqueta.addEventListener('click', () => {
+        modalConfirm.hide(); // Fecha o modal
+        printArea.innerHTML = ''; // Limpa etiquetas antigas
+
+        // Loop para gerar a quantidade de volumes solicitada
+        for (let i = 1; i <= dadosEtiqueta.volumes; i++) {
+            const page = document.createElement('div');
+            page.className = 'etiqueta-page';
+            
+            page.innerHTML = `
+                <div class="etiqueta-box">
+                    <div class="etiqueta-header">
+                        <h2>DESTINATÁRIO</h2>
+                        <h3 class="etiqueta-cliente">${dadosEtiqueta.cliente}</h3>
+                        <p>${dadosEtiqueta.cidade} - ${dadosEtiqueta.estado}</p>
+                    </div>
+                    <div class="etiqueta-info">
+                        <span><strong>NF:</strong> ${dadosEtiqueta.nota}</span>
+                        <span><strong>Volume:</strong> ${i} / ${dadosEtiqueta.volumes}</span>
+                    </div>
+                    <div class="etiqueta-qr-container">
+                        <div id="qrcode-${i}" class="qr-code"></div>
+                        <p class="chave-nfe">${dadosEtiqueta.chave}</p>
+                    </div>
+                </div>
+            `;
+            printArea.appendChild(page);
+
+            // Gerar o QR Code
+            new QRCode(document.getElementById(`qrcode-${i}`), {
+                text: dadosEtiqueta.chave,
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.L
+            });
+        }
+
+        // Aguarda meio segundo apenas para o QR Code ser desenhado na tela e chama a impressão
+        setTimeout(() => {
+            window.print();
+        }, 500);
+    });
+});document.addEventListener("DOMContentLoaded", () => {
     // Referências dos elementos DOM
     const form = document.getElementById('formEtiquetas');
     const modalConfirm = new bootstrap.Modal(document.getElementById('confirmEtiquetas'));
