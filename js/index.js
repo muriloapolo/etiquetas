@@ -1,9 +1,8 @@
-// Array global para armazenar temporariamente as etiquetas divididas por página
 let etiquetaArrayPerPage = [];
 let etiqueta;
-let formatoImpressaoSelecionado = "a4"; // Padrão
+let formatoImpressaoSelecionado = "a4";
 
-// Captura a troca de formato de impressão pelo menu superior
+// Alterna o formato de impressão pelo menu
 document.querySelectorAll(".dropdown-menu .dropdown-item").forEach(item => {
     item.addEventListener("click", (e) => {
         e.preventDefault();
@@ -14,7 +13,8 @@ document.querySelectorAll(".dropdown-menu .dropdown-item").forEach(item => {
 });
 
 class Etiqueta {
-    constructor(cidade, estado, totalVolume, notaFiscal, chaveAcesso) {
+    constructor(nomeCliente, cidade, estado, totalVolume, notaFiscal, chaveAcesso) {
+        this.nomeCliente = nomeCliente;
         this.cidade = cidade;
         this.estado = estado;
         this.totalVolume = totalVolume;
@@ -22,23 +22,24 @@ class Etiqueta {
         this.chaveAcesso = chaveAcesso;
     }
 
-    // Preenche os dados de resumo no Modal de confirmação
+    // Preenche dados no Modal de Confirmação
     montaEtiquetaModal() {
+        document.querySelector("#cliModal").innerText = this.nomeCliente;
         document.querySelector("#city").innerText = this.cidade;
         document.querySelector("#uf").innerText = this.estado;
         document.querySelector("#nf").innerText = this.notaFiscal;
         document.querySelector("#vol").innerText = this.totalVolume;
     }
 
-    // Gera o total de etiquetas e faz a distribuição por páginas
+    // Gera o total de etiquetas e distribui pelas páginas
     geraTotalEtiqueta() {
         let book = document.querySelector(".book");
         let vol = Number(this.totalVolume);
-        etiquetaArrayPerPage = []; // Limpa array anterior
+        etiquetaArrayPerPage = [];
 
-        // Cria os objetos individuais para cada volume (Ex: 1/5, 2/5...)
         for (let i = 1; i <= vol; i++) {
             etiquetaArrayPerPage.push({
+                cliente: this.nomeCliente,
                 destino: this.cidade,
                 estado: this.estado,
                 volumes: `${i} / ${vol}`,
@@ -47,8 +48,8 @@ class Etiqueta {
             });
         }
 
-        // Define a quantidade de etiquetas por página de acordo com o formato escolhido
-        const itensPorPagina = formatoImpressaoSelecionado === "a4" ? 10 : 4;
+        // 12 etiquetas por página A4 para maximizar o aproveitamento com total legibilidade (grade 3x4)
+        const itensPorPagina = formatoImpressaoSelecionado === "a4" ? 12 : 4;
         const separar = (array, maximo) => {
             return array.reduce((acumulador, item, indice) => {
                 const grupo = Math.floor(indice / maximo);
@@ -59,7 +60,7 @@ class Etiqueta {
 
         let newArraySlice = separar(etiquetaArrayPerPage, itensPorPagina);
 
-        // Cria o botão flutuante de impressão
+        // Botão flutuante para impressão manual rápida
         let btnPrint = document.createElement("button");
         btnPrint.classList.add("btn-print");
         btnPrint.innerText = "🖨️ Imprimir Agora";
@@ -68,7 +69,7 @@ class Etiqueta {
         });
         book.appendChild(btnPrint);
 
-        // Renderiza cada página e seus respectivos cards de etiquetas
+        // Renderização dos blocos baseados exatamente no rascunho enviado
         newArraySlice.forEach((divisores, op) => {
             let page = document.createElement("div");
             page.classList.add("page");
@@ -79,15 +80,26 @@ class Etiqueta {
                 
                 let cardHtml = `
                     <div class="card cardEtiquetasImp">
-                        <div class="card-body p-2 d-flex flex-column justify-content-between">
-                            <ul class="list-unstyled mb-1" style="font-size: 0.85rem; line-height: 1.2;">
-                                <li><strong>Destino:</strong> <span class="text-item">${it.destino} - ${it.estado}</span></li>
-                                <li><strong>Volume:</strong> <span class="text-item text-danger">${it.volumes}</span></li>
-                                <li><strong>Nota Fiscal:</strong> <span class="text-item">${it.notaFiscal}</span></li>
-                            </ul>
-                            <div class="text-center mt-auto">
-                                <svg id="${uniqueBarcodeId}" class="w-100" style="max-height: 35px;"></svg>
-                            </div>
+                        <!-- Linha 1: Nome do Cliente -->
+                        <div class="etiqueta-linha etiqueta-cliente">
+                            👤 <span>${it.cliente}</span>
+                        </div>
+                        
+                        <!-- Linha 2: Cidade e Estado -->
+                        <div class="etiqueta-linha etiqueta-info-grid">
+                            <div class="overflow-hidden"><strong>Destino:</strong> ${it.destino}</div>
+                            <div><strong>UF:</strong> ${it.estado}</div>
+                        </div>
+
+                        <!-- Linha 3: Volumes e Nota Fiscal -->
+                        <div class="etiqueta-linha etiqueta-info-grid">
+                            <div><strong>Vol:</strong> <span class="text-danger fw-bold">${it.volumes}</span></div>
+                            <div><strong>NF:</strong> ${it.notaFiscal}</div>
+                        </div>
+
+                        <!-- Linha 4: Código de Barras / Chave da NF -->
+                        <div class="text-center mt-auto pt-1">
+                            <svg id="${uniqueBarcodeId}" style="width: 100%; max-height: 28px;"></svg>
                         </div>
                     </div>`;
                 
@@ -95,7 +107,7 @@ class Etiqueta {
             });
         });
 
-        // Renderiza os códigos de barras via JsBarcode após os elementos estarem inseridos no DOM
+        // Aplicação do JsBarcode após inserção no DOM
         newArraySlice.forEach((divisores, op) => {
             divisores.forEach((it, indexCalculado) => {
                 let uniqueBarcodeId = `barcode-${op}-${indexCalculado}`;
@@ -104,8 +116,8 @@ class Etiqueta {
                     JsBarcode(`#${uniqueBarcodeId}`, textoCodigo, {
                         format: "CODE128",
                         displayValue: true,
-                        fontSize: 10,
-                        height: 25,
+                        fontSize: 9,
+                        height: 20,
                         margin: 0
                     });
                 } catch (err) {
@@ -115,7 +127,6 @@ class Etiqueta {
         });
     }
 
-    // Prepara a tela para modo de impressão ocultando o formulário e o menu
     imprimeEtiquetas() {
         let corpo = document.querySelector(".container");
         let header = document.querySelector("header");
@@ -125,7 +136,6 @@ class Etiqueta {
         corpo.classList.add("togglerDisplay");
         if(header) header.classList.add("togglerDisplay");
 
-        // Limpa conteúdo anterior e gera novos elementos
         if (book.innerHTML != "") {
             book.innerHTML = "";
         }
@@ -133,25 +143,28 @@ class Etiqueta {
     }
 }
 
-// Evento disparado quando o usuário clica no botão principal para abrir o modal
+// Evento do botão para validar e acionar o modal
 document.querySelector("#geraEtiquetaBtn").addEventListener("click", () => {
+    let nomeCliente = document.querySelector("#nomeCliente").value.trim();
     let cidade = document.querySelector("#nomeCidade").value.trim();
     let estado = document.querySelector("#estado").value;
     let volumes = document.querySelector("#volumes").value.trim();
     let notaFiscal = document.querySelector("#notaFiscal").value.trim();
-    let chaveAcesso = document.querySelector("#chaveAcesso").value.trim();
+    let chaveBruta = document.querySelector("#chaveAcesso").value;
 
-    if (!cidade || !estado || !volumes || !notaFiscal) {
-        alert("Por favor, preencha todos os campos obrigatórios antes de continuar.");
+    if (!nomeCliente || !cidade || !estado || !volumes || !notaFiscal) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
         return;
     }
 
-    // Instancia o objeto e joga os dados no modal
-    etiqueta = new Etiqueta(cidade, estado, volumes, notaFiscal, chaveAcesso);
+    // REMOVEDOR DE ESPAÇOS EM BRANCO: Remove espaços das pontas e também todos os espaços internos/intercalados entre os algarismos da chave[cite: 1]
+    let chaveAcesso = chaveBruta ? chaveBruta.replace(/\s+/g, '') : "";
+
+    etiqueta = new Etiqueta(nomeCliente, cidade, estado, volumes, notaFiscal, chaveAcesso);
     etiqueta.montaEtiquetaModal();
 });
 
-// Evento de confirmação dentro do Modal (Inicia a geração e impressão)
+// Confirmação final para abrir a tela de impressão
 document.querySelector("#btnConfirmaEtiqueta").addEventListener("click", () => {
     if (etiqueta) {
         etiqueta.imprimeEtiquetas();
