@@ -1,7 +1,7 @@
 /* Página de Impressão */
 .page {
     width: 100%;
-    max-width: 210mm; /* Mantém proporção do A4 como limite máximo */
+    max-width: 210mm;
     min-height: 297mm;
     padding: 10mm;
     margin: 10mm auto;
@@ -10,18 +10,16 @@
     background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* Alinhamento à esquerda para grid perfeita */
     align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 8mm; /* Espaçamento maior e mais limpo entre as etiquetas */
+    gap: 8mm; /* Espaçamento entre as etiquetas */
 }
 
-/* Card da Etiqueta: Ajustado para fontes maiores e melhor preenchimento */
+/* Card da Etiqueta: Estrutura base sem largura (definida pelas classes de layout abaixo) */
 .cardEtiquetasImp {
-    width: 100%; /* Para preencher linha inteira como solicitado ou ajuste conforme formato via JS no futuro */
-    max-width: 95mm; 
-    height: 55mm; /* Altura estendida para acomodar texto maior */
+    height: 55mm; 
     border: 2px solid #000 !important;
     border-radius: 6px;
     display: flex;
@@ -32,6 +30,16 @@
     box-sizing: border-box;
     page-break-inside: avoid;
     break-inside: avoid;
+}
+
+/* CONTROLE DE COLUNAS INTELIGENTE */
+.layout-multi-col .cardEtiquetasImp {
+    width: calc(50% - 4mm); /* 2 colunas perfeitas lado a lado */
+}
+
+.layout-single-col .cardEtiquetasImp {
+    width: 100%; /* 1 coluna ocupando toda a largura (Bobinas e Térmicas) */
+    max-width: 100mm;
 }
 
 /* Linhas internas mais robustas e claras */
@@ -82,7 +90,7 @@
 
 .book {
     position: relative;
-    padding-top: 60px; /* Espaço para os botões fixos superiores */
+    padding-top: 60px; /* Espaço para os botões fixos */
 }
 
 /* Botões flutuantes na tela de prévia */
