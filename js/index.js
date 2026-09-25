@@ -50,11 +50,9 @@ class Etiqueta {
             });
         }
 
-        // Determina itens por página. Em A4 cabem cerca de 10 a 12 com esse tamanho novo.
-        let itensPorPagina = 10; 
-        if (formatoImpressaoSelecionado !== "a4" && formatoImpressaoSelecionado !== "carta") {
-            itensPorPagina = 1; // Impressoras térmicas geram 1 por página/corte
-        }
+        // Se for A4 ou Carta, cabem 10 etiquetas (5 linhas de 2 colunas). Bobinas usam 1 por vez.
+        let isMultiCol = (formatoImpressaoSelecionado === "a4" || formatoImpressaoSelecionado === "carta");
+        let itensPorPagina = isMultiCol ? 10 : 1; 
 
         const separar = (array, maximo) => {
             return array.reduce((acumulador, item, indice) => {
@@ -70,7 +68,7 @@ class Etiqueta {
         let actionsContainer = document.createElement("div");
         actionsContainer.classList.add("print-actions");
 
-        // Botão Voltar (Corrige o problema de não conseguir retornar à tela inicial)
+        // Botão Voltar
         let btnVoltar = document.createElement("button");
         btnVoltar.classList.add("btn-voltar");
         btnVoltar.innerText = "⬅️ Voltar";
@@ -78,7 +76,7 @@ class Etiqueta {
             document.querySelector(".book").classList.add("togglerDisplay");
             document.querySelector("#mainContainer").classList.remove("togglerDisplay");
             document.querySelector("header").classList.remove("togglerDisplay");
-            document.querySelector(".book").innerHTML = ""; // Limpa a prévia atual
+            document.querySelector(".book").innerHTML = ""; 
         });
 
         // Botão Imprimir
@@ -97,6 +95,14 @@ class Etiqueta {
         newArraySlice.forEach((divisores, op) => {
             let page = document.createElement("div");
             page.classList.add("page");
+            
+            // Adiciona a classe correta de colunas de acordo com o formato
+            if (isMultiCol) {
+                page.classList.add("layout-multi-col");
+            } else {
+                page.classList.add("layout-single-col");
+            }
+
             book.appendChild(page);
 
             divisores.forEach((it, indexCalculado) => {
@@ -127,7 +133,7 @@ class Etiqueta {
             });
         });
 
-        // Aplicação robusta do código de barras
+        // Aplicação do código de barras
         newArraySlice.forEach((divisores, op) => {
             divisores.forEach((it, indexCalculado) => {
                 let uniqueBarcodeId = `barcode-${op}-${indexCalculado}`;
@@ -136,7 +142,7 @@ class Etiqueta {
                     JsBarcode(`#${uniqueBarcodeId}`, textoCodigo, {
                         format: "CODE128",
                         displayValue: true,
-                        fontSize: 10, // Fonte do código de barras ampliada
+                        fontSize: 10,
                         height: 28,
                         margin: 0
                     });
@@ -152,7 +158,6 @@ class Etiqueta {
         let header = document.querySelector("header");
         let book = document.querySelector(".book");
         
-        // Esconde formulário e cabeçalho, mostra tela de impressão
         book.classList.remove("togglerDisplay");
         corpo.classList.add("togglerDisplay");
         if(header) header.classList.add("togglerDisplay");
