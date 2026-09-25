@@ -1,9 +1,8 @@
-/* Estilização da Página A4 de Impressão */
+/* Página A4 Otimizada para maior aproveitamento */
 .page {
     width: 210mm;
     min-height: 297mm;
-    height: auto;
-    padding: 10mm;
+    padding: 8mm;
     margin: 10mm auto;
     border: 1px #d3d3d3 solid;
     border-radius: 8px;
@@ -11,23 +10,52 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 4mm;
 }
 
-/* Formato Compacto para Impressora Térmica ou Padrão A4 */
+/* Card da Etiqueta baseado no seu rascunho estruturado */
 .cardEtiquetasImp {
     width: 95mm;
-    height: 48mm;
-    border: 1px solid #333 !important;
-    border-radius: 6px;
+    height: 44mm;
+    border: 1.5px solid #222 !important;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 6px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* Linhas internas customizadas seguindo seu desenho */
+.etiqueta-linha {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+
+.etiqueta-cliente {
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.etiqueta-info-grid {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
-    padding: 6px;
-    margin-bottom: 5mm;
-    background-color: #fff;
+    font-size: 0.75rem;
+}
+
+.etiqueta-bloco {
+    border: 1px solid #ddd;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: #fdfdfd;
 }
 
 /* Ocultar elementos dinamicamente na tela principal */
@@ -35,18 +63,11 @@
     display: none !important;
 }
 
-/* Estilo do texto interno das etiquetas */
-.text-item {
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #111;
-}
-
 .book {
     position: relative;
 }
 
-/* Botão Flutuante de Impressão de Emergência / Retorno */
+/* Botão Flutuante de Impressão */
 .btn-print {
     position: fixed;
     top: 20px;
@@ -66,7 +87,7 @@
     background-color: #157347;
 }
 
-/* REGRAS DE IMPRESSÃO (Oculta menus, formulários e botões fixos nativos da página) */
+/* REGRAS DE IMPRESSÃO */
 @media print {
     body {
         background: white !important;
@@ -99,7 +120,6 @@
         break-inside: avoid;
     }
 
-    /* Oculta o botão flutuante impresso */
     .btn-print {
         display: none !important;
     }
