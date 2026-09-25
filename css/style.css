@@ -1,44 +1,46 @@
-/* Página A4 Otimizada para maior aproveitamento */
+/* Página A4 de Impressão */
 .page {
     width: 210mm;
     min-height: 297mm;
-    padding: 8mm;
+    padding: 10mm;
     margin: 10mm auto;
     border: 1px #d3d3d3 solid;
     border-radius: 8px;
     background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Mantém duas colunas lado a lado */
     align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 4mm;
+    gap: 6mm; /* Espaçamento vertical e horizontal entre os cards */
 }
 
-/* Card da Etiqueta baseado no seu rascunho estruturado */
+/* Card da Etiqueta: Garantindo tamanho fixo de 2 por linha (aprox 95mm cada) */
 .cardEtiquetasImp {
     width: 95mm;
-    height: 44mm;
+    height: 46mm;
     border: 1.5px solid #222 !important;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 4px 6px;
+    padding: 5px 8px;
     background-color: #fff;
     box-sizing: border-box;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
-/* Linhas internas customizadas seguindo seu desenho */
+/* Linhas internas do card */
 .etiqueta-linha {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ddd;
     padding-bottom: 2px;
     margin-bottom: 2px;
 }
 
 .etiqueta-cliente {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -48,17 +50,22 @@
 .etiqueta-info-grid {
     display: flex;
     justify-content: space-between;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
 }
 
-.etiqueta-bloco {
-    border: 1px solid #ddd;
-    padding: 1px 4px;
-    border-radius: 3px;
-    background: #fdfdfd;
+/* Ajuste crítico para o código de barras não vazar do card */
+.barcode-container {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    margin-top: auto;
 }
 
-/* Ocultar elementos dinamicamente na tela principal */
+.barcode-container svg {
+    max-width: 100% !important;
+    height: 28px !important;
+}
+
 .togglerDisplay {
     display: none !important;
 }
@@ -67,7 +74,6 @@
     position: relative;
 }
 
-/* Botão Flutuante de Impressão */
 .btn-print {
     position: fixed;
     top: 20px;
@@ -117,7 +123,6 @@
 
     .cardEtiquetasImp {
         border: 1px solid #000 !important;
-        break-inside: avoid;
     }
 
     .btn-print {
