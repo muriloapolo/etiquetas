@@ -9,14 +9,14 @@
     background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: space-between; /* Distribui os itens lado a lado em colunas */
+    justify-content: space-between;
     align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 4mm;
 }
 
-/* Card da Etiqueta: Largura exata para caber duas por linha em formato de grade */
+/* Card da Etiqueta: Organizado exatamente conforme o rascunho enviado */
 .cardEtiquetasImp {
     width: 95mm;
     height: 46mm;
@@ -25,18 +25,18 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 5px 8px;
+    padding: 6px 8px;
     background-color: #fff;
     box-sizing: border-box;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
-/* Linhas internas do card alinhadas ao rascunho */
+/* Linhas internas espaçadas e limpas */
 .etiqueta-linha {
     border-bottom: 1px solid #ddd;
-    padding-bottom: 2px;
-    margin-bottom: 2px;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
 }
 
 .etiqueta-cliente {
@@ -53,7 +53,6 @@
     font-size: 0.8rem;
 }
 
-/* Container estrito para o código de barras não ultrapassar os limites do card */
 .barcode-container {
     width: 100%;
     text-align: center;
@@ -63,7 +62,7 @@
 
 .barcode-container svg {
     max-width: 100% !important;
-    height: 26px !important;
+    height: 24px !important;
 }
 
 .togglerDisplay {
