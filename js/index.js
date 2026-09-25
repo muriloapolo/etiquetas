@@ -115,7 +115,7 @@ class Etiqueta {
                         </div>
                         
                         <div class="etiqueta-linha etiqueta-info-grid">
-                            <div class="overflow-hidden"><strong>Dest:</strong> ${it.destino}</div>
+                            <div class="overflow-hidden"><strong>Destino:</strong> ${it.destino}</div>
                             <div><strong>UF:</strong> ${it.estado}</div>
                         </div>
 
