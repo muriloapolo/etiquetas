@@ -1,8 +1,9 @@
-/* Página A4 de Impressão */
+/* Página de Impressão */
 .page {
-    width: 210mm;
+    width: 100%;
+    max-width: 210mm; /* Mantém proporção do A4 como limite máximo */
     min-height: 297mm;
-    padding: 8mm;
+    padding: 10mm;
     margin: 10mm auto;
     border: 1px #d3d3d3 solid;
     border-radius: 8px;
@@ -13,44 +14,53 @@
     align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 4mm;
+    gap: 8mm; /* Espaçamento maior e mais limpo entre as etiquetas */
 }
 
-/* Card da Etiqueta: Organizado exatamente conforme o rascunho enviado */
+/* Card da Etiqueta: Ajustado para fontes maiores e melhor preenchimento */
 .cardEtiquetasImp {
-    width: 95mm;
-    height: 46mm;
-    border: 1.5px solid #222 !important;
-    border-radius: 4px;
+    width: 100%; /* Para preencher linha inteira como solicitado ou ajuste conforme formato via JS no futuro */
+    max-width: 95mm; 
+    height: 55mm; /* Altura estendida para acomodar texto maior */
+    border: 2px solid #000 !important;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 6px 8px;
+    padding: 8px 12px;
     background-color: #fff;
     box-sizing: border-box;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
-/* Linhas internas espaçadas e limpas */
+/* Linhas internas mais robustas e claras */
 .etiqueta-linha {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 3px;
-    margin-bottom: 3px;
+    border-bottom: 1.5px solid #ccc;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
 }
 
+/* Textos maiores e mais legíveis */
 .etiqueta-cliente {
-    font-size: 0.85rem;
-    font-weight: bold;
+    font-size: 1.1rem;
+    font-weight: 900;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #000;
 }
 
 .etiqueta-info-grid {
     display: flex;
     justify-content: space-between;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000;
+}
+
+.etiqueta-info-grid strong {
+    font-weight: 800;
 }
 
 .barcode-container {
@@ -58,11 +68,12 @@
     text-align: center;
     overflow: hidden;
     margin-top: auto;
+    padding-top: 5px;
 }
 
 .barcode-container svg {
     max-width: 100% !important;
-    height: 24px !important;
+    height: 32px !important;
 }
 
 .togglerDisplay {
@@ -71,28 +82,44 @@
 
 .book {
     position: relative;
+    padding-top: 60px; /* Espaço para os botões fixos superiores */
 }
 
-.btn-print {
+/* Botões flutuantes na tela de prévia */
+.print-actions {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1050;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-print, .btn-voltar {
     border-radius: 30px;
     padding: 10px 25px;
     font-weight: bold;
     border: none;
     text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+
+.btn-print {
     background-color: #198754;
     color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.btn-print:hover {
-    background-color: #157347;
+.btn-print:hover { background-color: #157347; }
+
+.btn-voltar {
+    background-color: #6c757d;
+    color: #ffffff;
 }
 
-/* REGRAS DE IMPRESSÃO */
+.btn-voltar:hover { background-color: #5c636a; }
+
+/* REGRAS DE IMPRESSÃO ESTREITAS */
 @media print {
     body {
         background: white !important;
@@ -100,20 +127,22 @@
         padding: 0;
     }
 
-    header, .container, .modal, .btn-print-container {
+    header, .container, .modal, .print-actions {
         display: none !important;
     }
 
     .book {
         display: block !important;
+        padding-top: 0;
     }
 
     .page {
         margin: 0;
         border: none;
         border-radius: 0;
-        width: 210mm;
-        min-height: 297mm;
+        width: 100%;
+        max-width: none;
+        min-height: auto;
         box-shadow: none;
         background: white;
         page-break-after: always;
@@ -121,10 +150,6 @@
     }
 
     .cardEtiquetasImp {
-        border: 1px solid #000 !important;
-    }
-
-    .btn-print {
-        display: none !important;
+        border: 2px solid #000 !important;
     }
 }
