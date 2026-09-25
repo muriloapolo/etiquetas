@@ -23,7 +23,7 @@
                     🖨️ Formato de Impressão
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item active" href="#" data-formato="a4">Folha A4 (Máximo Otimizado)</a></li>
+                    <li><a class="dropdown-item active" href="#" data-formato="a4">Folha A4 (Grade Otimizada)</a></li>
                     <li><a class="dropdown-item" href="#" data-formato="termica">Impressora Térmica (10x15cm)</a></li>
                 </ul>
             </div>
@@ -44,11 +44,11 @@
                             <input class="form-control" type="text" id="nomeCliente" placeholder="Nome ou Razão Social do Cliente" required/>
                         </div>
 
-                        <!-- Chave de Acesso da Nota Fiscal (Tratada contra espaços) -->
+                        <!-- Chave de Acesso da Nota Fiscal (Remove espaços automaticamente) -->
                         <div class="mb-3">
                             <label for="chaveAcesso" class="form-label fw-semibold">Chave de Acesso da NF (44 dígitos)</label>
                             <input class="form-control" type="text" id="chaveAcesso" maxlength="60" placeholder="Ex: 3521 0500 ... (espaços serão removidos automaticamente)"/>
-                            <div class="form-text">O sistema remove automaticamente qualquer espaço em branco inserido na chave[cite: 1].</div>
+                            <div class="form-text">O sistema remove automaticamente qualquer espaço em branco ou formatação da chave[cite: 1].</div>
                         </div>
 
                         <div class="row">
