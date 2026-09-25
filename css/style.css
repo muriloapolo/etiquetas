@@ -51,8 +51,8 @@
 }
 
 .etiqueta-cliente {
-    font-size: 1.1rem;
-    font-weight: 900;
+    font-size: 1.5rem;
+    font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -62,7 +62,7 @@
 .etiqueta-info-grid {
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 500;
     color: #000;
 }
