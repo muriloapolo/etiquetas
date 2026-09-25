@@ -10,7 +10,6 @@ document.querySelectorAll(".dropdown-menu .dropdown-item").forEach(item => {
         item.classList.add("active");
         formatoImpressaoSelecionado = item.getAttribute("data-formato");
         
-        // Atualiza o texto do botão do dropdown para mostrar o selecionado
         let textoSelecionado = item.innerText.split(':')[0];
         document.querySelector("#dropdownMenuButton").innerText = `🖨️ Formato: ${textoSelecionado}`;
     });
@@ -50,9 +49,26 @@ class Etiqueta {
             });
         }
 
-        // Se for A4 ou Carta, cabem 10 etiquetas (5 linhas de 2 colunas). Bobinas usam 1 por vez.
+        // Validação de Layout
         let isMultiCol = (formatoImpressaoSelecionado === "a4" || formatoImpressaoSelecionado === "carta");
         let itensPorPagina = isMultiCol ? 10 : 1; 
+
+        // INJEÇÃO DINÂMICA DE TAMANHO DE PÁGINA (Evita quebrar as térmicas)
+        let existingStyle = document.getElementById("print-page-size");
+        if (existingStyle) existingStyle.remove();
+        
+        let stylePrint = document.createElement("style");
+        stylePrint.id = "print-page-size";
+        
+        if (formatoImpressaoSelecionado === "a4") {
+            stylePrint.innerHTML = "@media print { @page { size: A4; margin: 0; } }";
+        } else if (formatoImpressaoSelecionado === "carta") {
+            stylePrint.innerHTML = "@media print { @page { size: letter; margin: 0; } }";
+        } else {
+            // Térmicas usam apenas margin: 0 e deixam o driver da impressora cortar o papel
+            stylePrint.innerHTML = "@media print { @page { margin: 0; } }"; 
+        }
+        document.head.appendChild(stylePrint);
 
         const separar = (array, maximo) => {
             return array.reduce((acumulador, item, indice) => {
@@ -64,11 +80,10 @@ class Etiqueta {
 
         let newArraySlice = separar(etiquetaArrayPerPage, itensPorPagina);
 
-        // Container para os botões superiores de controle
+        // Renderiza Botões Superiores
         let actionsContainer = document.createElement("div");
         actionsContainer.classList.add("print-actions");
 
-        // Botão Voltar
         let btnVoltar = document.createElement("button");
         btnVoltar.classList.add("btn-voltar");
         btnVoltar.innerText = "⬅️ Voltar";
@@ -79,13 +94,10 @@ class Etiqueta {
             document.querySelector(".book").innerHTML = ""; 
         });
 
-        // Botão Imprimir
         let btnPrint = document.createElement("button");
         btnPrint.classList.add("btn-print");
         btnPrint.innerText = "🖨️ Imprimir";
-        btnPrint.addEventListener("click", () => {
-            window.print();
-        });
+        btnPrint.addEventListener("click", () => window.print());
 
         actionsContainer.appendChild(btnVoltar);
         actionsContainer.appendChild(btnPrint);
@@ -95,14 +107,7 @@ class Etiqueta {
         newArraySlice.forEach((divisores, op) => {
             let page = document.createElement("div");
             page.classList.add("page");
-            
-            // Adiciona a classe correta de colunas de acordo com o formato
-            if (isMultiCol) {
-                page.classList.add("layout-multi-col");
-            } else {
-                page.classList.add("layout-single-col");
-            }
-
+            page.classList.add(isMultiCol ? "layout-multi-col" : "layout-single-col");
             book.appendChild(page);
 
             divisores.forEach((it, indexCalculado) => {
@@ -115,7 +120,7 @@ class Etiqueta {
                         </div>
                         
                         <div class="etiqueta-linha etiqueta-info-grid">
-                            <div class="overflow-hidden"><strong>Destino:</strong> ${it.destino}</div>
+                            <div class="overflow-hidden"><strong>Dest:</strong> ${it.destino}</div>
                             <div><strong>UF:</strong> ${it.estado}</div>
                         </div>
 
@@ -162,14 +167,12 @@ class Etiqueta {
         corpo.classList.add("togglerDisplay");
         if(header) header.classList.add("togglerDisplay");
 
-        if (book.innerHTML != "") {
-            book.innerHTML = "";
-        }
+        if (book.innerHTML != "") book.innerHTML = "";
+        
         this.geraTotalEtiqueta();
     }
 }
 
-// Disparo do modal de validação
 document.querySelector("#geraEtiquetaBtn").addEventListener("click", () => {
     let nomeCliente = document.querySelector("#nomeCliente").value.trim();
     let cidade = document.querySelector("#nomeCidade").value.trim();
@@ -193,9 +196,6 @@ document.querySelector("#geraEtiquetaBtn").addEventListener("click", () => {
     modalInstance.show();
 });
 
-// Ação final: Ir para visualização/impressão
 document.querySelector("#btnConfirmaEtiqueta").addEventListener("click", () => {
-    if (etiqueta) {
-        etiqueta.imprimeEtiquetas();
-    }
+    if (etiqueta) etiqueta.imprimeEtiquetas();
 });
