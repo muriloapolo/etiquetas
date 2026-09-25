@@ -23,7 +23,7 @@
                     🖨️ Formato de Impressão
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item active" href="#" data-formato="a4">Folha A4 (Padrão 10/pág)</a></li>
+                    <li><a class="dropdown-item active" href="#" data-formato="a4">Folha A4 (Máximo Otimizado)</a></li>
                     <li><a class="dropdown-item" href="#" data-formato="termica">Impressora Térmica (10x15cm)</a></li>
                 </ul>
             </div>
@@ -36,13 +36,19 @@
                 <div class="card shadow border-0 rounded-4 p-4 bg-white">
                     <h2 class="text-center text-primary mb-4 fw-bold">Emissão de Etiquetas de Expedição</h2>
                     
-                    <form id="formEtiquetas" class="needs-validation" novalidate>
+                    <form id="formEtiquetas">
                         
-                        <!-- Chave de Acesso da Nota Fiscal (Para gerar o Código de Barras) -->
+                        <!-- Nome do Cliente -->
+                        <div class="mb-3">
+                            <label for="nomeCliente" class="form-label fw-semibold">Nome do Cliente</label>
+                            <input class="form-control" type="text" id="nomeCliente" placeholder="Nome ou Razão Social do Cliente" required/>
+                        </div>
+
+                        <!-- Chave de Acesso da Nota Fiscal (Tratada contra espaços) -->
                         <div class="mb-3">
                             <label for="chaveAcesso" class="form-label fw-semibold">Chave de Acesso da NF (44 dígitos)</label>
-                            <input class="form-control" type="text" id="chaveAcesso" maxlength="44" placeholder="Ex: 35210500000000000000550010000000011000000000" aria-label="Chave de Acesso"/>
-                            <div class="form-text">O código de barras será gerado automaticamente na etiqueta a partir desta chave.</div>
+                            <input class="form-control" type="text" id="chaveAcesso" maxlength="60" placeholder="Ex: 3521 0500 ... (espaços serão removidos automaticamente)"/>
+                            <div class="form-text">O sistema remove automaticamente qualquer espaço em branco inserido na chave[cite: 1].</div>
                         </div>
 
                         <div class="row">
@@ -82,12 +88,12 @@
                             </div>
                         </div>
 
-                      <!-- Botão de Disparo do Modal de Confirmação CORRIGIDO -->
-<div class="d-grid mt-4">
-    <button type="button" class="btn btn-primary btn-lg shadow-sm" id="geraEtiquetaBtn" data-bs-toggle="modal" data-bs-target="#confirmEtiquetas">
-        🚀 Visualizar Prévia das Etiquetas
-    </button>
-</div>
+                        <!-- Botão de Disparo do Modal de Confirmação -->
+                        <div class="d-grid mt-4">
+                            <button type="button" class="btn btn-primary btn-lg shadow-sm" id="geraEtiquetaBtn" data-bs-toggle="modal" data-bs-target="#confirmEtiquetas">
+                                🚀 Visualizar Prévia das Etiquetas
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -106,6 +112,7 @@
                     <p class="text-muted small mb-3">Verifique se as informações abaixo estão corretas antes de prosseguir:</p>
                     <div class="card bg-light border-0 p-3">
                         <ul class="list-group list-group-flush bg-transparent">
+                            <li class="list-group-item bg-transparent border-0 py-1"><strong>Cliente:</strong> <span id="cliModal" class="text-uppercase">...</span></li>
                             <li class="list-group-item bg-transparent border-0 py-1"><strong>Destino:</strong> <span id="city" class="text-uppercase">...</span></li>
                             <li class="list-group-item bg-transparent border-0 py-1"><strong>Estado:</strong> <span id="uf" class="text-uppercase">...</span></li>
                             <li class="list-group-item bg-transparent border-0 py-1"><strong>Nota Fiscal:</strong> <span id="nf">...</span></li>
@@ -121,10 +128,10 @@
         </div>
     </div>
 
-    <!-- ÁREA DE IMPRESSÃO (Oculta na tela normal, exibida apenas ao imprimir) -->
+    <!-- ÁREA DE IMPRESSÃO -->
     <div class="book togglerDisplay"></div>
 
-    <!-- Scripts Bootstrap e Arquivo Principal JS -->
+    <!-- Scripts Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
     <script defer src="./js/index.js"></script>
