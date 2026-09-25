@@ -2,24 +2,25 @@
 .page {
     width: 100%;
     max-width: 210mm;
-    min-height: 297mm;
-    padding: 10mm;
+    height: 296mm; /* Quase o tamanho exato do A4 para evitar salto de página extra */
+    padding: 6mm; /* Margem interna reduzida para aproveitar espaço */
     margin: 10mm auto;
     border: 1px #d3d3d3 solid;
     border-radius: 8px;
     background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: flex-start; /* Alinhamento à esquerda para grid perfeita */
+    justify-content: space-between;
     align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 8mm; /* Espaçamento entre as etiquetas */
+    gap: 4mm; /* Espaçamento reduzido para caber 5 linhas */
+    page-break-after: always;
 }
 
-/* Card da Etiqueta: Estrutura base sem largura (definida pelas classes de layout abaixo) */
+/* Card da Etiqueta */
 .cardEtiquetasImp {
-    height: 55mm; 
+    height: 54mm; /* Altura calculada matematicamente para caber 5 linhas na A4 */
     border: 2px solid #000 !important;
     border-radius: 6px;
     display: flex;
@@ -34,22 +35,21 @@
 
 /* CONTROLE DE COLUNAS INTELIGENTE */
 .layout-multi-col .cardEtiquetasImp {
-    width: calc(50% - 4mm); /* 2 colunas perfeitas lado a lado */
+    width: calc(50% - 2mm); /* 2 colunas perfeitas lado a lado */
 }
 
 .layout-single-col .cardEtiquetasImp {
-    width: 100%; /* 1 coluna ocupando toda a largura (Bobinas e Térmicas) */
+    width: 100%; 
     max-width: 100mm;
 }
 
-/* Linhas internas mais robustas e claras */
+/* Linhas internas */
 .etiqueta-linha {
     border-bottom: 1.5px solid #ccc;
     padding-bottom: 4px;
     margin-bottom: 4px;
 }
 
-/* Textos maiores e mais legíveis */
 .etiqueta-cliente {
     font-size: 1.1rem;
     font-weight: 900;
@@ -90,7 +90,7 @@
 
 .book {
     position: relative;
-    padding-top: 60px; /* Espaço para os botões fixos */
+    padding-top: 60px;
 }
 
 /* Botões flutuantes na tela de prévia */
@@ -113,22 +113,18 @@
     cursor: pointer;
 }
 
-.btn-print {
-    background-color: #198754;
-    color: #ffffff;
-}
-
+.btn-print { background-color: #198754; color: #ffffff; }
 .btn-print:hover { background-color: #157347; }
-
-.btn-voltar {
-    background-color: #6c757d;
-    color: #ffffff;
-}
-
+.btn-voltar { background-color: #6c757d; color: #ffffff; }
 .btn-voltar:hover { background-color: #5c636a; }
 
-/* REGRAS DE IMPRESSÃO ESTREITAS */
+/* REGRAS DE IMPRESSÃO - CRÍTICO PARA NÃO QUEBRAR PÁGINAS */
 @media print {
+    @page {
+        margin: 0; /* Remove as margens automáticas do navegador */
+        size: A4;
+    }
+
     body {
         background: white !important;
         margin: 0;
@@ -148,9 +144,9 @@
         margin: 0;
         border: none;
         border-radius: 0;
-        width: 100%;
-        max-width: none;
-        min-height: auto;
+        width: 210mm;
+        height: 297mm;
+        padding: 6mm;
         box-shadow: none;
         background: white;
         page-break-after: always;
