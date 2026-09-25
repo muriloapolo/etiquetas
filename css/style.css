@@ -157,3 +157,26 @@
 
     .cardEtiquetasImp { border: 2px solid #000 !important; }
 }
+/* =========================================
+   AJUSTES DO QR CODE - ETIQUETAS
+   ========================================= */
+
+/* Centraliza o container do QR Code na etiqueta */
+.qrcode-container, 
+#qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    width: 100%;
+}
+
+/* Garante que o QR Code gerado não perca a proporção quadrada (aspect-ratio) */
+.qrcode-container img, 
+.qrcode-container canvas,
+#qrcode img, 
+#qrcode canvas {
+    max-width: 100%;
+    height: auto !important; /* Sobrescreve alturas fixas do código de barras antigo */
+    object-fit: contain;
+}
