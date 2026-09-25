@@ -188,7 +188,11 @@ document.querySelector("#geraEtiquetaBtn").addEventListener("click", () => {
 
     let chaveAcesso = chaveBruta ? chaveBruta.replace(/\s+/g, '') : "";
 
-    etiqueta = new Etiqueta(nomeCliente, cidade, estado, volumes, notaFiscal, chaveAcesso);
+    etiqueta = new Etiqueta(nomeCliente, cidade, estado, volumes, notaFisca );
+/*
+Removido para testes
+chaveAcesso
+*/
     etiqueta.montaEtiquetaModal();
 
     let modalElement = document.querySelector("#confirmEtiquetas");
