@@ -1,182 +1,88 @@
-/* Container base da Página */
-.page {
-    background: white;
-    margin: 10mm auto;
-    border: 1px #d3d3d3 solid;
+/* =========================================
+   ESTILOS PARA A ÁREA DE IMPRESSÃO (ETIQUETAS)
+   ========================================= */
+
+.etiqueta-page {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    max-width: 10cm; /* Tamanho aproximado de etiqueta térmica */
+    background: #fff;
+}
+
+.etiqueta-box {
+    border: 2px solid #000;
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-wrap: wrap;
+    color: #000;
 }
 
-/* -------------------------------------------
-   LAYOUT A4 / CARTA (Múltiplas Colunas)
-------------------------------------------- */
-.layout-multi-col {
-    width: 100%;
-    max-width: 210mm;
-    height: 296mm; /* Limita a altura para cravar as 10 etiquetas sem pular página */
-    padding: 6mm;
-    justify-content: space-between;
-    align-content: flex-start;
-    gap: 4mm;
-    page-break-after: always;
+.etiqueta-header {
+    text-align: center;
+    border-bottom: 2px dashed #000;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
-.layout-multi-col .cardEtiquetasImp {
-    width: calc(50% - 2mm); /* 2 colunas */
-    height: 54mm; /* Altura exata para 5 linhas */
-}
-
-/* -------------------------------------------
-   LAYOUT BOBINAS TÉRMICAS (Coluna Única)
-------------------------------------------- */
-.layout-single-col {
-    width: 100%;
-    max-width: 100mm; /* Largura máxima para visualização na tela */
-    height: auto; /* Deixa o papel rolar infinitamente */
-    padding: 4mm;
-    justify-content: center;
-    gap: 4mm;
-}
-
-.layout-single-col .cardEtiquetasImp {
-    width: 100%;
-    height: auto;
-    min-height: 55mm;
-    page-break-after: always; /* Cada etiqueta gera um "corte" na bobina */
-}
-
-/* -------------------------------------------
-   ESTILOS GERAIS DOS CARDS E BOTÕES
-------------------------------------------- */
-.cardEtiquetasImp {
-    border: 2px solid #000 !important;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background-color: #fff;
-    box-sizing: border-box;
-    break-inside: avoid;
-}
-
-.etiqueta-linha {
-    border-bottom: 1.5px solid #ccc;
-    padding-bottom: 4px;
-    margin-bottom: 4px;
+.etiqueta-header h2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
 }
 
 .etiqueta-cliente {
-    font-size: 1.1rem;
+    font-size: 18px;
     font-weight: 900;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #000;
+    text-transform: uppercase;
+    margin: 5px 0;
 }
 
-.etiqueta-info-grid {
+.etiqueta-info {
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #000;
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
-.etiqueta-info-grid strong { font-weight: 800; }
-
-.barcode-container {
-    width: 100%;
+.etiqueta-qr-container {
     text-align: center;
-    overflow: hidden;
-    margin-top: auto;
-    padding-top: 5px;
 }
 
-.barcode-container svg {
-    max-width: 100% !important;
-    height: 32px !important;
-}
-
-.togglerDisplay { display: none !important; }
-
-.book { position: relative; padding-top: 60px; }
-
-.print-actions {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1050;
-    display: flex;
-    gap: 15px;
-}
-
-.btn-print, .btn-voltar {
-    border-radius: 30px;
-    padding: 10px 25px;
-    font-weight: bold;
-    border: none;
-    text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    cursor: pointer;
-}
-
-.btn-print { background-color: #198754; color: #ffffff; }
-.btn-print:hover { background-color: #157347; }
-.btn-voltar { background-color: #6c757d; color: #ffffff; }
-.btn-voltar:hover { background-color: #5c636a; }
-
-/* -------------------------------------------
-   REGRAS DE IMPRESSÃO (NÃO TOCA NO @PAGE AQUI)
-------------------------------------------- */
-@media print {
-    body { margin: 0; padding: 0; background: white !important; }
-    header, .container, .modal, .print-actions { display: none !important; }
-    .book { display: block !important; padding-top: 0; }
-
-    .page {
-        margin: 0;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-    }
-
-    .layout-multi-col {
-        width: 210mm;
-        height: 297mm;
-        padding: 6mm;
-    }
-
-    .layout-single-col {
-        width: 100%;
-        max-width: none;
-        padding: 0;
-    }
-
-    .cardEtiquetasImp { border: 2px solid #000 !important; }
-}
-/* =========================================
-   AJUSTES DO QR CODE - ETIQUETAS
-   ========================================= */
-
-/* Centraliza o container do QR Code na etiqueta */
-.qrcode-container, 
-#qrcode {
+.qr-code {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 15px auto;
-    width: 100%;
+    margin: 10px 0;
 }
 
-/* Garante que o QR Code gerado não perca a proporção quadrada (aspect-ratio) */
-.qrcode-container img, 
-.qrcode-container canvas,
-#qrcode img, 
-#qrcode canvas {
-    max-width: 100%;
-    height: auto !important; /* Sobrescreve alturas fixas do código de barras antigo */
-    object-fit: contain;
+.chave-nfe {
+    font-size: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    word-break: break-all;
+    margin: 0;
+}
+
+/* =========================================
+   REGRAS DE IMPRESSÃO MATIVA DO NAVEGADOR
+   ========================================= */
+@media print {
+    body {
+        background: #fff !important;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .etiqueta-page {
+        margin: 0;
+        max-width: 100%;
+        page-break-after: always; /* Quebra de página por etiqueta */
+    }
+
+    .etiqueta-box {
+        border: 2px solid #000 !important;
+        page-break-inside: avoid;
+    }
+
+    /* Esconde botões e barras de rolagem na hora de imprimir */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
