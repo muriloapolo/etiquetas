@@ -1,26 +1,56 @@
-/* Página de Impressão */
+/* Container base da Página */
 .page {
-    width: 100%;
-    max-width: 210mm;
-    height: 296mm; /* Quase o tamanho exato do A4 para evitar salto de página extra */
-    padding: 6mm; /* Margem interna reduzida para aproveitar espaço */
+    background: white;
     margin: 10mm auto;
     border: 1px #d3d3d3 solid;
     border-radius: 8px;
-    background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
+    flex-wrap: wrap;
+}
+
+/* -------------------------------------------
+   LAYOUT A4 / CARTA (Múltiplas Colunas)
+------------------------------------------- */
+.layout-multi-col {
+    width: 100%;
+    max-width: 210mm;
+    height: 296mm; /* Limita a altura para cravar as 10 etiquetas sem pular página */
+    padding: 6mm;
     justify-content: space-between;
     align-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 4mm; /* Espaçamento reduzido para caber 5 linhas */
+    gap: 4mm;
     page-break-after: always;
 }
 
-/* Card da Etiqueta */
+.layout-multi-col .cardEtiquetasImp {
+    width: calc(50% - 2mm); /* 2 colunas */
+    height: 54mm; /* Altura exata para 5 linhas */
+}
+
+/* -------------------------------------------
+   LAYOUT BOBINAS TÉRMICAS (Coluna Única)
+------------------------------------------- */
+.layout-single-col {
+    width: 100%;
+    max-width: 100mm; /* Largura máxima para visualização na tela */
+    height: auto; /* Deixa o papel rolar infinitamente */
+    padding: 4mm;
+    justify-content: center;
+    gap: 4mm;
+}
+
+.layout-single-col .cardEtiquetasImp {
+    width: 100%;
+    height: auto;
+    min-height: 55mm;
+    page-break-after: always; /* Cada etiqueta gera um "corte" na bobina */
+}
+
+/* -------------------------------------------
+   ESTILOS GERAIS DOS CARDS E BOTÕES
+------------------------------------------- */
 .cardEtiquetasImp {
-    height: 54mm; /* Altura calculada matematicamente para caber 5 linhas na A4 */
     border: 2px solid #000 !important;
     border-radius: 6px;
     display: flex;
@@ -29,21 +59,9 @@
     padding: 8px 12px;
     background-color: #fff;
     box-sizing: border-box;
-    page-break-inside: avoid;
     break-inside: avoid;
 }
 
-/* CONTROLE DE COLUNAS INTELIGENTE */
-.layout-multi-col .cardEtiquetasImp {
-    width: calc(50% - 2mm); /* 2 colunas perfeitas lado a lado */
-}
-
-.layout-single-col .cardEtiquetasImp {
-    width: 100%; 
-    max-width: 100mm;
-}
-
-/* Linhas internas */
 .etiqueta-linha {
     border-bottom: 1.5px solid #ccc;
     padding-bottom: 4px;
@@ -51,8 +69,8 @@
 }
 
 .etiqueta-cliente {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 900;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -62,14 +80,12 @@
 .etiqueta-info-grid {
     display: flex;
     justify-content: space-between;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #000;
 }
 
-.etiqueta-info-grid strong {
-    font-weight: 800;
-}
+.etiqueta-info-grid strong { font-weight: 800; }
 
 .barcode-container {
     width: 100%;
@@ -84,16 +100,10 @@
     height: 32px !important;
 }
 
-.togglerDisplay {
-    display: none !important;
-}
+.togglerDisplay { display: none !important; }
 
-.book {
-    position: relative;
-    padding-top: 60px;
-}
+.book { position: relative; padding-top: 60px; }
 
-/* Botões flutuantes na tela de prévia */
 .print-actions {
     position: fixed;
     top: 20px;
@@ -118,42 +128,32 @@
 .btn-voltar { background-color: #6c757d; color: #ffffff; }
 .btn-voltar:hover { background-color: #5c636a; }
 
-/* REGRAS DE IMPRESSÃO - CRÍTICO PARA NÃO QUEBRAR PÁGINAS */
+/* -------------------------------------------
+   REGRAS DE IMPRESSÃO (NÃO TOCA NO @PAGE AQUI)
+------------------------------------------- */
 @media print {
-    @page {
-        margin: 0; /* Remove as margens automáticas do navegador */
-        size: A4;
-    }
-
-    body {
-        background: white !important;
-        margin: 0;
-        padding: 0;
-    }
-
-    header, .container, .modal, .print-actions {
-        display: none !important;
-    }
-
-    .book {
-        display: block !important;
-        padding-top: 0;
-    }
+    body { margin: 0; padding: 0; background: white !important; }
+    header, .container, .modal, .print-actions { display: none !important; }
+    .book { display: block !important; padding-top: 0; }
 
     .page {
         margin: 0;
         border: none;
         border-radius: 0;
+        box-shadow: none;
+    }
+
+    .layout-multi-col {
         width: 210mm;
         height: 297mm;
         padding: 6mm;
-        box-shadow: none;
-        background: white;
-        page-break-after: always;
-        page-break-inside: avoid;
     }
 
-    .cardEtiquetasImp {
-        border: 2px solid #000 !important;
+    .layout-single-col {
+        width: 100%;
+        max-width: none;
+        padding: 0;
     }
+
+    .cardEtiquetasImp { border: 2px solid #000 !important; }
 }
