@@ -129,10 +129,10 @@ class Etiqueta {
                             <div><strong>NF:</strong> ${it.notaFiscal}</div>
                         </div>
 
-                       /* <div class="barcode-container">
+                        <div class="barcode-container">
                             <svg id="${uniqueBarcodeId}"></svg>
                         </div>
-                        */
+                        
                     </div>`;
                 
                 page.innerHTML += cardHtml;
